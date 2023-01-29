@@ -1,0 +1,15 @@
+/*모든 요소에 대해서 마진,패딩을 0으로 잡는게 편함 */
+
+body { background-color: #FFC; }
+
+/* 컨버스 */
+.canvas {
+    width: 500px;
+    height: 500px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0px 0px 3px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.top-buffer { margin-top:20px; }
