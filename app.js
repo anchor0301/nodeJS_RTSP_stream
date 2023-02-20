@@ -7,8 +7,6 @@ const moment = require('moment');
 
 
 var router = express.Router();
-
-// CSS 적용
 router.use('/bootstrap', express.static(path.join(__dirname,"../node_modules/bootstrap/dist")));
 
 module.exports = router;
@@ -17,7 +15,6 @@ module.exports = router;
 const app = express();
 
 require('moment-timezone');
-app.use(express.static('Views'));
 moment.tz.setDefault("Asia/Seoul");
 
 
@@ -31,13 +28,10 @@ app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 
 
 localHost = ["127.0.0.1", "172.30.1.41","172.30.1.3"]
-userId = "admin";
-Password = "rlatjdals1!"
 var rtspList = [
 
-    {"url": `rtsp://${userId}:${Password}@192.168.0.191:554`, "port": 9021, "stream": null, "lastData": null},
-    //{"url": `rtsp://${userId}:${Password}@192.168.0.191:8000/ch4/1`, "port": 9022, "stream": null, "lastData": null},
-
+    {"url": 'rtsp://admin:00000@121.158.248.187:554/ch4/1', "port": 9021, "stream": null, "lastData": null},
+    {"url": 'rtsp://admin:00000@121.158.248.187:554/ch6/1', "port": 9999, "stream": null, "lastData": null},
 ];
 var context = []
 
@@ -51,7 +45,7 @@ for (var i = 0; i < rtspListLength; i++) {
 
         if (obj.lastData !== undefined) {
             var stream_date = new Date(obj.lastData);
-            var gap= ((today.getTime() - stream_date.getTime()) / 1000);
+            var gap = (today.getTime() - stream_date.getTime()) / 1000;
             console.log(gap);
             if (gap >= 5) {//check gap of second
                 obj.stream.stop();
@@ -59,7 +53,7 @@ for (var i = 0; i < rtspListLength; i++) {
 
 
                 obj.lastData = today;
-                //obj.stream = obj.stream.restartStream();
+                obj.stream = obj.stream.restartStream();
 
                 obj.stream.mpeg1Muxer.on('ffmpegStderr', (data) => {
                     var today = new Date();
@@ -122,10 +116,6 @@ app.get('/', async(req, res) => {
         console.log("외부 ip로 접속")
         res.sendFile(path.join(__dirname, 'html/test1.html'));
     }
-})
-
-app.get("/test",(req,res)=>{
-    res.sendFile(__dirname +'/Views/index.html')
 })
 
 
